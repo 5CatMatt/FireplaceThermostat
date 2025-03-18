@@ -5,9 +5,9 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "fireplace"
 version = "0.1"
-description = "A brief description of your project"
+description = "Pi 3 with 7" touch display built to be a fireplace thermostat controller"
 authors = [
-    { name="Your Name", email="your.email@example.com" },
+    { name="Matt", email="matt@mlttek.com" },
 ]
 license = { file="LICENSE" }
 readme = "README.md"
@@ -18,5 +18,4 @@ dependencies = [
 ]
 
 [project.urls]
-# homepage = "https://github.com/yourusername/your_project_name"
-# repository = "https://github.com/yourusername/your_project_name"
+# repository = "https://github.com/5CatMatt/FireplaceThermostat"

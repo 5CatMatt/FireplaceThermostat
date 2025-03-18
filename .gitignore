@@ -17,3 +17,6 @@ build/
 # Ignore private files
 Structure.ini
 keys.py
+current_weather_data.csv
+final_weather_data.csv
+WeatherOutput.txt
