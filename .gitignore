@@ -24,3 +24,4 @@ src/fireplace/final_weather_data.csv
 src/fireplace/WeatherOutput.txt
 current_weather_data.csv
 final_weather_data.csv
+WeatherOutput.txt
