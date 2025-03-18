@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "fireplace"
+version = "0.1"
+description = "A brief description of your project"
+authors = [
+    { name="Your Name", email="your.email@example.com" },
+]
+license = { file="LICENSE" }
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = [
+    # "some_package>=1.0",
+    # "another_package>=2.0",
+]
+
+[project.urls]
+# homepage = "https://github.com/yourusername/your_project_name"
+# repository = "https://github.com/yourusername/your_project_name"

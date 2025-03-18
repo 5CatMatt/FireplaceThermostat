@@ -1,0 +1,962 @@
+{
+    "Black Cat": {
+        "bgImg": "/blackCat.png",
+        "time": {
+            "color": "palDarkSlateGray",
+            "pos": "relative",
+            "Xpos": "screen",
+            "Ypos": "['left', 'top', 17]",
+            "font": "fontCen60"
+        },
+        "dayLong": {
+            "color": "palDarkSlateGray",
+            "pos": "coords",
+            "Xpos": "17",
+            "Ypos": "400",
+            "font": "fontCen28"
+        },
+        "dayShort": {
+            "color": "palLtBlue",
+            "pos": "none",
+            "Xpos": "0",
+            "Ypos": "0",
+            "font": "fontCen28"
+        },
+        "date": {
+            "color": "palDarkSlateGray",
+            "pos": "relative",
+            "Xpos": "dayLong",
+            "Ypos": "['left', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "temperature": {
+            "highTempColor": "palDarkSlateGray",
+            "lowTempColor": "palDarkSlateGray",
+            "normalTempColor": "palDarkSlateGray",
+            "pos": "relative",
+            "Xpos": "screen",
+            "Ypos": "['right', 'top', 17]",
+            "font": "fontCen60"
+        },
+        "humidity": {
+            "color": "palDarkSlateGray",
+            "pos": "none",
+            "Xpos": "temperature",
+            "Ypos": "['right', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "outside": {
+            "color": "palDarkSlateGray",
+            "pos": "relative",
+            "Xpos": "date",
+            "Ypos": "['right', 'center', 30]",
+            "font": "fontCen28"
+        },
+        "menu": {
+            "pos": "bottomRight",
+            "color": "palBlack",
+            "fontColor": "palLtBlue",
+            "dividerColor": "palBlack"
+        },
+        "reload": {
+            "pos": "none",
+            "enable": "False"
+        }
+    },
+    "Blue Waves": {
+        "bgImg": "/blueWaves.jpg",
+        "time": {
+            "color": "palWhite",
+            "pos": "coords",
+            "Xpos": "70",
+            "Ypos": "10",
+            "font": "fontCen80"
+        },
+        "dayLong": {
+            "color": "palLtBlue",
+            "pos": "relative",
+            "Xpos": "screen",
+            "Ypos": "['right', 'top', 10]",
+            "font": "fontCen32"
+        },
+        "dayShort": {
+            "color": "palLtBlue",
+            "pos": "none",
+            "Xpos": "time",
+            "Ypos": "['right', 'center', 42]",
+            "font": "fontCen60"
+        },
+        "date": {
+            "color": "palLtBlue",
+            "pos": "relative",
+            "Xpos": "dayLong",
+            "Ypos": "['right', 'bottom', 0]",
+            "font": "fontCen32"
+        },
+        "temperature": {
+            "highTempColor": "palRed",
+            "lowTempColor": "palBlue",
+            "normalTempColor": "palWhite",
+            "pos": "coords",
+            "Xpos": "555",
+            "Ypos": "445",
+            "font": "fontCen28"
+        },
+        "humidity": {
+            "color": "palLtBlue",
+            "pos": "relative",
+            "Xpos": "temperature",
+            "Ypos": "['right', 'center', 40]",
+            "font": "fontCen28"
+        },
+        "outside": {
+            "color": "palLtBlue",
+            "pos": "relative",
+            "Xpos": "date",
+            "Ypos": "['right', 'bottom', 0]",
+            "font": "fontCen32"
+        },
+        "menu": {
+            "pos": "bottomLeft",
+            "color": "palDodgerBlue",
+            "fontColor": "palWhite",
+            "dividerColor": "palBlue"
+        },
+        "reload": {
+            "pos": "none",
+            "enable": "False"
+        }
+    },
+    "Sail Boat": {
+        "bgImg": "/sailBoat.jpg",
+        "time": {
+            "color": "palWhite",
+            "pos": "coords",
+            "Xpos": "600",
+            "Ypos": "20",
+            "font": "fontCen60"
+        },
+        "dayLong": {
+            "color": "palWhite",
+            "pos": "relative",
+            "Xpos": "time",
+            "Ypos": "['center', 'bottom', -10]",
+            "font": "fontCen28"
+        },
+        "dayShort": {
+            "color": "palWhite",
+            "pos": "none",
+            "Xpos": "0",
+            "Ypos": "0",
+            "font": "fontCen28"
+        },
+        "date": {
+            "color": "palWhite",
+            "pos": "relative",
+            "Xpos": "dayLong",
+            "Ypos": "['center', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "temperature": {
+            "highTempColor": "palWhite",
+            "lowTempColor": "palWhite",
+            "normalTempColor": "palWhite",
+            "pos": "coords",
+            "Xpos": "76",
+            "Ypos": "350",
+            "font": "fontCen60"
+        },
+        "humidity": {
+            "color": "palWhite",
+            "pos": "relative",
+            "Xpos": "temperature",
+            "Ypos": "['center', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "outside": {
+            "color": "palWhite",
+            "pos": "relative",
+            "Xpos": "date",
+            "Ypos": "['center', 'bottom', 0]",
+            "font": "fontCen32"
+        },
+        "menu": {
+            "pos": "bottomRight",
+            "color": "palMidnightBlue",
+            "fontColor": "palGold",
+            "dividerColor": "palBlue"
+        },
+        "reload": {
+            "pos": "none",
+            "enable": "False"
+        }
+    },
+    "Water Drop": {
+        "bgImg": "/waterDrop.jpg",
+        "time": {
+            "color": "palBlue",
+            "pos": "coords",
+            "Xpos": "10",
+            "Ypos": "5",
+            "font": "fontCen60"
+        },
+        "dayLong": {
+            "color": "palBlue",
+            "pos": "relative",
+            "Xpos": "screen",
+            "Ypos": "['center', 'top', 10]",
+            "font": "fontCen28"
+        },
+        "dayShort": {
+            "color": "palBlue",
+            "pos": "none",
+            "Xpos": "0",
+            "Ypos": "0",
+            "font": "fontCen28"
+        },
+        "date": {
+            "color": "palLtBlue",
+            "pos": "none",
+            "Xpos": "dayLong",
+            "Ypos": "['center', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "temperature": {
+            "highTempColor": "palBlue",
+            "lowTempColor": "palBlue",
+            "normalTempColor": "palBlue",
+            "pos": "relative",
+            "Xpos": "screen",
+            "Ypos": "['right', 'top', 10]",
+            "font": "fontCen60"
+        },
+        "humidity": {
+            "color": "palBlue",
+            "pos": "coords",
+            "Xpos": "196",
+            "Ypos": "328",
+            "font": "fontCen28"
+        },
+        "outside": {
+            "color": "palBlue",
+            "pos": "relative",
+            "Xpos": "dayLong",
+            "Ypos": "['center', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "menu": {
+            "pos": "bottomRight",
+            "color": "palLtBlue",
+            "fontColor": "palBlue",
+            "dividerColor": "palBlue"
+        },
+        "reload": {
+            "pos": "none",
+            "enable": "False"
+        }
+    },
+    "Pac Man": {
+        "bgImg": "/pacMan.jpg",
+        "time": {
+            "color": "palLightCoral",
+            "pos": "coords",
+            "Xpos": "15",
+            "Ypos": "15",
+            "font": "fontCen60"
+        },
+        "dayLong": {
+            "color": "palLightSkyBlue",
+            "pos": "relative",
+            "Xpos": "time",
+            "Ypos": "['left', 'bottom', 3]",
+            "font": "fontCen28"
+        },
+        "dayShort": {
+            "color": "palLtBlue",
+            "pos": "none",
+            "Xpos": "0",
+            "Ypos": "0",
+            "font": "fontCen28"
+        },
+        "date": {
+            "color": "palChocolate",
+            "pos": "relative",
+            "Xpos": "dayLong",
+            "Ypos": "['left', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "temperature": {
+            "highTempColor": "palRed",
+            "lowTempColor": "palRed",
+            "normalTempColor": "palRed",
+            "pos": "relative",
+            "Xpos": "date",
+            "Ypos": "['left', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "humidity": {
+            "color": "palRed",
+            "pos": "relative",
+            "Xpos": "temperature",
+            "Ypos": "['right', 'center', 20]",
+            "font": "fontCen28"
+        },
+        "outside": {
+            "color": "palChocolate",
+            "pos": "relative",
+            "Xpos": "date",
+            "Ypos": "['right', 'center', 26]",
+            "font": "fontCen28"
+        },
+        "menu": {
+            "pos": "topRight",
+            "color": "palChocolate",
+            "fontColor": "palBlack",
+            "dividerColor": "palBlack"
+        },
+        "reload": {
+            "pos": "none",
+            "enable": "False"
+        }
+    },
+    "Fire Bird": {
+        "bgImg": "/fireBird.jpg",
+        "time": {
+            "color": "palDarkOrange",
+            "pos": "coords",
+            "Xpos": "120",
+            "Ypos": "240",
+            "font": "fontCen60"
+        },
+        "dayLong": {
+            "color": "palDarkOrange",
+            "pos": "relative",
+            "Xpos": "time",
+            "Ypos": "['center', 'bottom', -10]",
+            "font": "fontCen28"
+        },
+        "dayShort": {
+            "color": "palLtBlue",
+            "pos": "none",
+            "Xpos": "0",
+            "Ypos": "0",
+            "font": "fontCen28"
+        },
+        "date": {
+            "color": "palDarkOrange",
+            "pos": "relative",
+            "Xpos": "dayLong",
+            "Ypos": "['center', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "temperature": {
+            "highTempColor": "palDarkOrange",
+            "lowTempColor": "palDarkOrange",
+            "normalTempColor": "palDarkOrange",
+            "pos": "coords",
+            "Xpos": "720",
+            "Ypos": "10",
+            "font": "fontCen28"
+        },
+        "humidity": {
+            "color": "palDarkOrange",
+            "pos": "relative",
+            "Xpos": "temperature",
+            "Ypos": "['right', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "outside": {
+            "color": "palDarkOrange",
+            "pos": "relative",
+            "Xpos": "date",
+            "Ypos": "['center', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "menu": {
+            "pos": "bottomRight",
+            "color": "palDarkOrange",
+            "fontColor": "palDarkRed",
+            "dividerColor": "palDarkRed"
+        },
+        "reload": {
+            "pos": "none",
+            "enable": "False"
+        }
+    },
+    "Heart Book": {
+        "bgImg": "/heartBook.jpg",
+        "time": {
+            "color": "palViolet",
+            "pos": "coords",
+            "Xpos": "10",
+            "Ypos": "5",
+            "font": "fontCen60"
+        },
+        "dayLong": {
+            "color": "palLtBlue",
+            "pos": "relative",
+            "Xpos": "time",
+            "Ypos": "['left', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "dayShort": {
+            "color": "palLtBlue",
+            "pos": "none",
+            "Xpos": "0",
+            "Ypos": "0",
+            "font": "fontCen28"
+        },
+        "date": {
+            "color": "palLtBlue",
+            "pos": "relative",
+            "Xpos": "dayLong",
+            "Ypos": "['left', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "temperature": {
+            "highTempColor": "palViolet",
+            "lowTempColor": "palViolet",
+            "normalTempColor": "palViolet",
+            "pos": "coords",
+            "Xpos": "622",
+            "Ypos": "406",
+            "font": "fontCen28"
+        },
+        "humidity": {
+            "color": "palViolet",
+            "pos": "relative",
+            "Xpos": "temperature",
+            "Ypos": "['right', 'center', 20]",
+            "font": "fontCen28"
+        },
+        "outside": {
+            "color": "palLtBlue",
+            "pos": "relative",
+            "Xpos": "date",
+            "Ypos": "['left', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "menu": {
+            "pos": "bottomRight",
+            "color": "palDarkOrchid",
+            "fontColor": "palPeachPuff",
+            "dividerColor": "palBlue"
+        },
+        "reload": {
+            "pos": "none",
+            "enable": "False"
+        }
+    },
+    "Imperial Dest": {
+        "bgImg": "/imperial.jpg",
+        "time": {
+            "color": "palDkGray",
+            "pos": "coords",
+            "Xpos": "20",
+            "Ypos": "400",
+            "font": "fontCen60"
+        },
+        "dayLong": {
+            "color": "palDkGray",
+            "pos": "none",
+            "Xpos": "time",
+            "Ypos": "['center', 'bottom', -10]",
+            "font": "fontCen28"
+        },
+        "dayShort": {
+            "color": "palDkGray",
+            "pos": "coords",
+            "Xpos": "10",
+            "Ypos": "0",
+            "font": "fontCen28"
+        },
+        "date": {
+            "color": "palDkGray",
+            "pos": "relative",
+            "Xpos": "dayShort",
+            "Ypos": "['right', 'center', 20]",
+            "font": "fontCen28"
+        },
+        "temperature": {
+            "highTempColor": "palDkGray",
+            "lowTempColor": "palDkGray",
+            "normalTempColor": "palDkGray",
+            "pos": "coords",
+            "Xpos": "635",
+            "Ypos": "400",
+            "font": "fontCen60"
+        },
+        "humidity": {
+            "color": "palDkGray",
+            "pos": "none",
+            "Xpos": "temperature",
+            "Ypos": "['right', 'center', 20]",
+            "font": "fontCen28"
+        },
+        "outside": {
+            "color": "palDkGray",
+            "pos": "relative",
+            "Xpos": "date",
+            "Ypos": "['right', 'center', 20]",
+            "font": "fontCen28"
+        },
+        "menu": {
+            "pos": "topRight",
+            "color": "palDkGray",
+            "fontColor": "palLtGray",
+            "dividerColor": "palGray"
+        },
+        "reload": {
+            "pos": "none",
+            "enable": "False"
+        }
+    },
+    "Lego Chase": {
+        "bgImg": "/legoChase.jpg",
+        "time": {
+            "color": "palGray",
+            "pos": "coords",
+            "Xpos": "620",
+            "Ypos": "10",
+            "font": "fontCen60"
+        },
+        "dayLong": {
+            "color": "palGray",
+            "pos": "none",
+            "Xpos": "time",
+            "Ypos": "['center', 'bottom', -10]",
+            "font": "fontCen28"
+        },
+        "dayShort": {
+            "color": "palGray",
+            "pos": "relative",
+            "Xpos": "time",
+            "Ypos": "['center', 'bottom', -10]",
+            "font": "fontCen40"
+        },
+        "date": {
+            "color": "palGray",
+            "pos": "none",
+            "Xpos": "dayLong",
+            "Ypos": "['center', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "temperature": {
+            "highTempColor": "palRed",
+            "lowTempColor": "palBlue",
+            "normalTempColor": "palWhite",
+            "pos": "coords",
+            "Xpos": "50",
+            "Ypos": "10",
+            "font": "fontCen60"
+        },
+        "humidity": {
+            "color": "palGray",
+            "pos": "relative",
+            "Xpos": "temperature",
+            "Ypos": "['center', 'bottom', -10]",
+            "font": "fontCen40"
+        },
+        "outside": {
+            "color": "palGray",
+            "pos": "relative",
+            "Xpos": "dayShort",
+            "Ypos": "['center', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "menu": {
+            "pos": "bottomRight",
+            "color": "palDkGray",
+            "fontColor": "palWhite",
+            "dividerColor": "palOrange"
+        },
+        "reload": {
+            "pos": "none",
+            "enable": "False"
+        }
+    },
+    "Moon Close": {
+        "bgImg": "/moon.png",
+        "time": {
+            "color": "palGray",
+            "pos": "coords",
+            "Xpos": "10",
+            "Ypos": "10",
+            "font": "fontCen60"
+        },
+        "dayLong": {
+            "color": "palGray",
+            "pos": "relative",
+            "Xpos": "screen",
+            "Ypos": "['center', 'top', 20]",
+            "font": "fontCen28"
+        },
+        "dayShort": {
+            "color": "palGray",
+            "pos": "none",
+            "Xpos": "0",
+            "Ypos": "0",
+            "font": "fontCen28"
+        },
+        "date": {
+            "color": "palGray",
+            "pos": "relative",
+            "Xpos": "dayLong",
+            "Ypos": "['center', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "temperature": {
+            "highTempColor": "palGray",
+            "lowTempColor": "palGray",
+            "normalTempColor": "palGray",
+            "pos": "coords",
+            "Xpos": "670",
+            "Ypos": "20",
+            "font": "fontCen48"
+        },
+        "humidity": {
+            "color": "palGray",
+            "pos": "relative",
+            "Xpos": "temperature",
+            "Ypos": "['center', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "outside": {
+            "color": "palGray",
+            "pos": "relative",
+            "Xpos": "time",
+            "Ypos": "['center', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "menu": {
+            "pos": "bottomRight",
+            "color": "palDkGray",
+            "fontColor": "palGray",
+            "dividerColor": "palGray"
+        },
+        "reload": {
+            "pos": "none",
+            "enable": "False"
+        }
+    },
+    "Penguins": {
+        "bgImg": "/penguins.jpg",
+        "time": {
+            "color": "palWhite",
+            "pos": "coords",
+            "Xpos": "20",
+            "Ypos": "15",
+            "font": "fontCen60"
+        },
+        "dayLong": {
+            "color": "palLtBlue",
+            "pos": "relative",
+            "Xpos": "time",
+            "Ypos": "['left', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "dayShort": {
+            "color": "palLtBlue",
+            "pos": "none",
+            "Xpos": "0",
+            "Ypos": "0",
+            "font": "fontCen28"
+        },
+        "date": {
+            "color": "palLtBlue",
+            "pos": "relative",
+            "Xpos": "dayLong",
+            "Ypos": "['left', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "temperature": {
+            "highTempColor": "palWhite",
+            "lowTempColor": "palWhite",
+            "normalTempColor": "palWhite",
+            "pos": "coords",
+            "Xpos": "635",
+            "Ypos": "20",
+            "font": "fontCen60"
+        },
+        "humidity": {
+            "color": "palLtBlue",
+            "pos": "relative",
+            "Xpos": "temperature",
+            "Ypos": "['right', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "outside": {
+            "color": "palLtBlue",
+            "pos": "relative",
+            "Xpos": "date",
+            "Ypos": "['right', 'center', 20]",
+            "font": "fontCen28"
+        },
+        "menu": {
+            "pos": "bottomLeft",
+            "color": "palBlue",
+            "fontColor": "palWhite",
+            "dividerColor": "palSkyBlue"
+        },
+        "reload": {
+            "pos": "none",
+            "enable": "False"
+        }
+    },
+    "Shadow Girl": {
+        "bgImg": "/shadowGirl.jpg",
+        "time": {
+            "color": "palWhite",
+            "pos": "coords",
+            "Xpos": "10",
+            "Ypos": "10",
+            "font": "fontCen60"
+        },
+        "dayLong": {
+            "color": "palLtBlue",
+            "pos": "coords",
+            "Xpos": "10",
+            "Ypos": "404",
+            "font": "fontCen28"
+        },
+        "dayShort": {
+            "color": "palLtBlue",
+            "pos": "none",
+            "Xpos": "0",
+            "Ypos": "0",
+            "font": "fontCen28"
+        },
+        "date": {
+            "color": "palLtBlue",
+            "pos": "relative",
+            "Xpos": "dayLong",
+            "Ypos": "['left', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "temperature": {
+            "highTempColor": "palRed",
+            "lowTempColor": "palBlue",
+            "normalTempColor": "palWhite",
+            "pos": "coords",
+            "Xpos": "620",
+            "Ypos": "404",
+            "font": "fontCen28"
+        },
+        "humidity": {
+            "color": "palLtBlue",
+            "pos": "relative",
+            "Xpos": "temperature",
+            "Ypos": "['right', 'center', 20]",
+            "font": "fontCen28"
+        },
+        "outside": {
+            "color": "palLtBlue",
+            "pos": "relative",
+            "Xpos": "date",
+            "Ypos": "['right', 'center', 20]",
+            "font": "fontCen28"
+        },
+        "menu": {
+            "pos": "bottomRight",
+            "color": "palLtBlue",
+            "fontColor": "palWhite",
+            "dividerColor": "palBlue"
+        },
+        "reload": {
+            "pos": "none",
+            "enable": "False"
+        }
+    },
+    "Purple Deer": {
+        "bgImg": "/purpleDeer.jpg",
+        "time": {
+            "color": "palViolet",
+            "pos": "coords",
+            "Xpos": "45",
+            "Ypos": "20",
+            "font": "fontCen48"
+        },
+        "dayLong": {
+            "color": "palLtBlue",
+            "pos": "none",
+            "Xpos": "time",
+            "Ypos": "['center', 'bottom', -10]",
+            "font": "fontCen28"
+        },
+        "dayShort": {
+            "color": "palLtBlue",
+            "pos": "none",
+            "Xpos": "0",
+            "Ypos": "0",
+            "font": "fontCen28"
+        },
+        "date": {
+            "color": "palLtBlue",
+            "pos": "none",
+            "Xpos": "dayLong",
+            "Ypos": "['center', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "temperature": {
+            "highTempColor": "palViolet",
+            "lowTempColor": "palViolet",
+            "normalTempColor": "palViolet",
+            "pos": "coords",
+            "Xpos": "35",
+            "Ypos": "360",
+            "font": "fontCen48"
+        },
+        "humidity": {
+            "color": "palLtBlue",
+            "pos": "none",
+            "Xpos": "temperature",
+            "Ypos": "['right', 'center', 20]",
+            "font": "fontCen28"
+        },
+        "outside": {
+            "color": "palViolet",
+            "pos": "coords",
+            "Xpos": "700",
+            "Ypos": "360",
+            "font": "fontCen48"
+        },
+        "menu": {
+            "pos": "topRight",
+            "color": "palViolet",
+            "fontColor": "palBlack",
+            "dividerColor": "palBlue"
+        },
+        "reload": {
+            "pos": "none",
+            "enable": "False"
+        }
+    },
+    "Wet Stone": {
+        "bgImg": "/wetStone.jpg",
+        "time": {
+            "color": "palWhite",
+            "pos": "coords",
+            "Xpos": "10",
+            "Ypos": "0",
+            "font": "fontCen60"
+        },
+        "dayLong": {
+            "color": "palLtBlue",
+            "pos": "none",
+            "Xpos": "time",
+            "Ypos": "['center', 'bottom', -10]",
+            "font": "fontCen28"
+        },
+        "dayShort": {
+            "color": "palLtBlue",
+            "pos": "relative",
+            "Xpos": "time",
+            "Ypos": "['left', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "date": {
+            "color": "palLtBlue",
+            "pos": "none",
+            "Xpos": "dayLong",
+            "Ypos": "['center', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "temperature": {
+            "highTempColor": "palWhite",
+            "lowTempColor": "palWhite",
+            "normalTempColor": "palWhite",
+            "pos": "relative",
+            "Xpos": "screen",
+            "Ypos": "['right', 'top', 10]",
+            "font": "fontCen60"
+        },
+        "humidity": {
+            "color": "palLtBlue",
+            "pos": "relative",
+            "Xpos": "temperature",
+            "Ypos": "['right', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "outside": {
+            "color": "palLtBlue",
+            "pos": "relative",
+            "Xpos": "dayShort",
+            "Ypos": "['right', 'center', 15]",
+            "font": "fontCen28"
+        },
+        "menu": {
+            "pos": "bottomLeft",
+            "color": "palLtBlue",
+            "fontColor": "palWhite",
+            "dividerColor": "palBlue"
+        },
+        "reload": {
+            "pos": "none",
+            "enable": "False"
+        }
+    },
+    "Dark Earth": {
+        "bgImg": "/darkEarth.jpg",
+        "time": {
+            "color": "palWhite",
+            "pos": "coords",
+            "Xpos": "20",
+            "Ypos": "10",
+            "font": "fontCen60"
+        },
+        "dayLong": {
+            "color": "palLtBlue",
+            "pos": "none",
+            "Xpos": "time",
+            "Ypos": "['left', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "dayShort": {
+            "color": "palLtBlue",
+            "pos": "relative",
+            "Xpos": "time",
+            "Ypos": "['left', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "date": {
+            "color": "palLtBlue",
+            "pos": "none",
+            "Xpos": "dayLong",
+            "Ypos": "['left', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "temperature": {
+            "highTempColor": "palRed",
+            "lowTempColor": "palBlue",
+            "normalTempColor": "palWhite",
+            "pos": "relative",
+            "Xpos": "time",
+            "Ypos": "['right', 'center', 210]",
+            "font": "fontCen60"
+        },
+        "humidity": {
+            "color": "palLtBlue",
+            "pos": "relative",
+            "Xpos": "temperature",
+            "Ypos": "['right', 'bottom', 0]",
+            "font": "fontCen28"
+        },
+        "outside": {
+            "color": "palLtBlue",
+            "pos": "relative",
+            "Xpos": "dayShort",
+            "Ypos": "['right', 'center', 20]",
+            "font": "fontCen28"
+        },
+        "menu": {
+            "pos": "bottomLeft",
+            "color": "palSteelBlue",
+            "fontColor": "palWhite",
+            "dividerColor": "palBlack"
+        },
+        "reload": {
+            "pos": "none",
+            "enable": "False"
+        }
+    }
+}

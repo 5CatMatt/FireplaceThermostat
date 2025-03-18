@@ -1,0 +1,7 @@
+date,day_of_month,weather_main,weather_icon,weather_description,dailyMinTemp,dailyMaxTemp,total_snow_inches,day_of_week
+2025-03-09,9,Clear,01n,clear sky,29.23,60.62,0,Sunday
+2025-03-10,10,Clouds,04d,overcast clouds,34.75,64.18,0,Monday
+2025-03-11,11,Clouds,04n,overcast clouds,36.21,58.37,0,Tuesday
+2025-03-12,12,Clouds,04d,overcast clouds,36.3,57.79,0,Wednesday
+2025-03-13,13,Clouds,04n,overcast clouds,36.77,59.54,0,Thursday
+2025-03-14,14,Clouds,04n,overcast clouds,41.99,55.58,0,Friday

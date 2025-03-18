@@ -1,0 +1,19 @@
+# Ignore the virtual environment
+venv/
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# Ignore IDE specific files
+.vscode/
+.idea/
+
+# Ignore distribution and build files
+dist/
+build/
+*.egg-info/
+
+# Ignore private files
+Structure.ini
+keys.py
