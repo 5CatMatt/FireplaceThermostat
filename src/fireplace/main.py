@@ -58,11 +58,14 @@ import os.path
 
 import paho.mqtt.client as mqtt
 
-broker_address = "192.168.50.7"
-broker_port = 1883
-temperature_topic = "Office Temperature"
-humidity_topic = "Office Humidity"
-battery_topic = "Office Battery"
+brokerAddress = "192.168.50.7"
+brokerPort = 1883
+temperatureTopic = "Office Temperature"
+humidityTopic = "Office Humidity"
+batteryTopic = "Office Battery"
+downstairsTempTopic = "Downstairs Temperature"
+downstairsHumidityTopic = "Downstairs Humidity"
+outsideTempTopic = "Outside Temperature"
 
 x = 0
 y = 0
@@ -350,6 +353,7 @@ class currentTemp():
     def update(self):
         self.temperature, self.humidity = (round(value, 1) for value in sht.measurements)
         self.temperature = truncate(CtoF(self.temperature), 1)
+        publishMQTT(client, downstairsTempTopic, self.temperature)
 
 def coordAssignment(xType, yType, yOffsetVal, selfWidth, selfHeight, refX, refY, refWidth, refHeight) :
     try:
@@ -543,6 +547,8 @@ class getCurrentWeather():
 
             self.currentData = pd.json_normalize(data['main'])
             self.currentData.to_csv("current_weather_data.csv", index=False)
+
+            publishMQTT(client, outsideTempTopic, self.temperatue)
 
 class getWeatherForecast():
     def __init__(self):
@@ -1069,33 +1075,48 @@ def screenSaver():
         with backlight.fade(duration = .5):
             backlight.brightness = backlightBrightness
 
+def publishMQTT(client, topic, payload):
+    """
+    Publishes the temperature value to the MQTT broker.
+
+    Args:
+        client (mqtt.Client): The MQTT client instance.
+        temperature (float): The temperature value to publish.
+    """
+    try:
+        payload = str(payload)
+        client.publish(topic, payload)
+        
+    except Exception as e:
+        print(f"Failed to publish message: {e}")
+
 # Callback when the client receives a CONNACK response from the server.
-def on_connect(client, userdata, flags, rc):
+def onConnectMQTT(client, userdata, flags, rc):
     print(f"Connected with result code {rc}")
     # Subscribe to the topic
-    client.subscribe(temperature_topic)
-    client.subscribe(humidity_topic)
-    client.subscribe(battery_topic)
+    client.subscribe(temperatureTopic)
+    client.subscribe(humidityTopic)
+    client.subscribe(batteryTopic)
 
 # Callback when a PUBLISH message is received from the server.
-def on_message(client, userdata, msg):
+def onMessageMQTT(client, userdata, msg):
     # print(f"Received message: {msg.payload.decode()} on topic {msg.topic}")
-    if msg.topic == temperature_topic:
+    if msg.topic == temperatureTopic:
         print(f"Received Temperature: {msg.payload.decode()} °F")
-    elif msg.topic == humidity_topic:
+    elif msg.topic == humidityTopic:
         print(f"Received Humidity: {msg.payload.decode()} %")
-    elif msg.topic == battery_topic:
+    elif msg.topic == batteryTopic:
         print(f"Received Battery: {msg.payload.decode()} Volts")
 
 # Create an MQTT client instance
 client = mqtt.Client()
 
 # Assign the callbacks
-client.on_connect = on_connect
-client.on_message = on_message
+client.on_connect = onConnectMQTT
+client.on_message = onMessageMQTT
 
 # Connect to the broker
-client.connect(broker_address, broker_port, 60)
+client.connect(brokerAddress, brokerPort, 60)
 
 # Start the loop to process network traffic and dispatch callbacks
 client.loop_start()
