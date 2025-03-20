@@ -58,14 +58,7 @@ import os.path
 
 import paho.mqtt.client as mqtt
 
-brokerAddress = "192.168.50.7"
-brokerPort = 1883
-temperatureTopic = "Office Temperature"
-humidityTopic = "Office Humidity"
-batteryTopic = "Office Battery"
-downstairsTempTopic = "Downstairs Temperature"
-downstairsHumidityTopic = "Downstairs Humidity"
-outsideTempTopic = "Outside Temperature"
+
 
 x = 0
 y = 0
@@ -346,6 +339,10 @@ class dateTimeNow():
         self.dayLong = now.strftime("%A")
         self.dayShort = now.strftime("%a")
 
+        publishMQTT(client, timeTopic, self.timeNow)
+        publishMQTT(client, longDayTopic, self.dayLong)
+        publishMQTT(client, shortDayTopic, self.dayShort)
+
 class currentTemp():
     def __init__(self):
         self.temperature, self.humidity = (round(value, 1) for value in sht.measurements)
@@ -465,21 +462,26 @@ def lightControl(service: Domain, onOff: str):
     :param domain: Home Assistant light control service
     :param string: Pass either 'on' or 'off' to toggle lights
     '''
-    global homeAssistantLightStatus #TODO: this is not being used currently
 
-    lightControlEnabled = False
+    lightControlEnabled = True # Simple switch to turn off light control
+
+    if not lightControlEnabled:
+        return
+    
+    global homeAssistantLightStatus
+
+    if onOff == homeAssistantLightStatus:   # No change, do nothing
+        return  
+    
+    homeAssistantLightStatus = onOff    # Update to current state
 
     try:
         for entity in entities:
             if (onOff == 'on'):
-                if lightControlEnabled: service.turn_on(entity_id = entity)
-                if not homeAssistantLightStatus:
-                    homeAssistantLightStatus = True
+                service.turn_on(entity_id = entity)
 
             if (onOff == 'off'):
-                if lightControlEnabled: service.turn_off(entity_id = entity)
-                if homeAssistantLightStatus:
-                    homeAssistantLightStatus = False
+                service.turn_off(entity_id = entity)
 
     except Exception as e:
             print(f"Error controlling home assistant entity {entity}: {e}")
@@ -489,8 +491,6 @@ def backlightController():
     Run this periodically to check the status of the motion sensor. If motion is
     detected the backlight will turn on, then back off when no motion is detected
     for a delay based on turnOffBacklightAfter and motionCounter. 
-
-    NOTE: this function currently controls the home assistant commands, TODO
     '''
     global motionCounter
 
@@ -504,18 +504,14 @@ def backlightController():
         motionCounter = 0
         backlight.power = True
 
-        # This will stop code blocking and calm down home assistant service calls, motion is true often
+        # This will stop code blocking, motion is true often
         if (backlight.brightness == 0):
-            lightControl(service, 'on')
-
             with backlight.fade(duration = backlightFadeInTime):
                 backlight.brightness = backlightBrightness
         
     else:
         motionCounter += 1
         if (motionCounter >= turnOffBacklightAfter):
-            lightControl(service, 'off')
-
             with backlight.fade(duration = backlightFadeOutTime):
                 backlight.brightness = 0
 
@@ -536,7 +532,10 @@ class getCurrentWeather():
         self.humidity = None
 
     def update(self):
-        response = requests.get(self.weatherURL)
+        try:
+            response = requests.get(self.weatherURL)
+        except:
+            print("getCurrentWeather responce failed")
 
         if response.status_code == 200:  # Success
             data = response.json()
@@ -580,7 +579,10 @@ class getWeatherForecast():
         return iconCache
 
     def update(self):
-        response = requests.get(self.weatherURL)
+        try:
+            response = requests.get(self.weatherURL)
+        except:
+            print("getWeatherForecast responce failed")
 
         if response.status_code == 200:  # Success
             data = response.json()
@@ -1094,19 +1096,30 @@ def publishMQTT(client, topic, payload):
 def onConnectMQTT(client, userdata, flags, rc):
     print(f"Connected with result code {rc}")
     # Subscribe to the topic
+    client.subscribe(motionTopic)
     client.subscribe(temperatureTopic)
     client.subscribe(humidityTopic)
     client.subscribe(batteryTopic)
 
 # Callback when a PUBLISH message is received from the server.
 def onMessageMQTT(client, userdata, msg):
-    # print(f"Received message: {msg.payload.decode()} on topic {msg.topic}")
+    print(f"Received message: {msg.payload.decode()} on topic {msg.topic}")
     if msg.topic == temperatureTopic:
-        print(f"Received Temperature: {msg.payload.decode()} °F")
+        officeTemperature = msg.payload.decode() + "°F"
+        # print(f"Received Temperature: {msg.payload.decode()} °F")
     elif msg.topic == humidityTopic:
-        print(f"Received Humidity: {msg.payload.decode()} %")
+        officeHumidity = msg.payload.decode() + "%"
+        # print(f"Received Humidity: {msg.payload.decode()} %")
     elif msg.topic == batteryTopic:
-        print(f"Received Battery: {msg.payload.decode()} Volts")
+        officeBattery = msg.payload.decode() + "V"
+        # print(f"Received Battery: {msg.payload.decode()} Volts")
+    elif msg.topic == motionTopic:
+        officeMotion = msg.payload.decode()
+        print(f"Received Motion: {msg.payload.decode()}")
+        if (officeMotion == "true"):
+            lightControl(service, 'on')
+        if (officeMotion == "false"):
+            lightControl(service, 'off')
 
 # Create an MQTT client instance
 client = mqtt.Client()
