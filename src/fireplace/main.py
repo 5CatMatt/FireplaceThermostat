@@ -47,9 +47,9 @@ posistioning method is somewhat straigtforeward.
 
 from fireplace.library.libraryFunctions import *
 from fireplace.utils.defines import *
-from fireplace.utils.keys import WEATHER_API_KEY
-from fireplace.utils.keys import HOME_ASSISTANT_API_KEY
-from fireplace.utils.keys import HOME_ASSISTANT_URL
+from fireplace.utils.keys import *
+# from fireplace.utils.keys import HOME_ASSISTANT_API_KEY
+# from fireplace.utils.keys import HOME_ASSISTANT_URL
 
 from homeassistant_api.models.domains import Domain
 
@@ -57,8 +57,6 @@ import os
 import os.path
 
 import paho.mqtt.client as mqtt
-
-
 
 x = 0
 y = 0
@@ -106,10 +104,21 @@ apds = APDS9960(i2c)
 apds.enable_proximity = True
 apds.enable_gesture = True
 
-# PIR sensor
+# Broadcom naming convention for GIPO pins
 GPIO.setmode(GPIO.BCM)
+
+# PIR sensor
 motionSensorPin = 18
 GPIO.setup(motionSensorPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+
+# Fireplace control pin - PWM provides "heartbeat" to relay controller
+fireplaceControlPin = 19
+currentFireplaceFrequecy = 1000
+fireplaceRelayClosed = True
+
+GPIO.setup(fireplaceControlPin, GPIO.OUT)
+fireplaceOutput = GPIO.PWM(fireplaceControlPin, currentFireplaceFrequecy)
+fireplaceOutput.start(50)
 
 # Backlight auto dim settings, fade in and out as well as power on/off
 motionCounter = 0
@@ -205,6 +214,21 @@ layoutFile = PROJECT_ROOT + "/layoutHomeScreen.json"
 
 fireOn = pygame.image.load(PROJECT_ROOT + '/Images/fireOn.png').convert_alpha()
 fireOff = pygame.image.load(PROJECT_ROOT + '/Images/fireOff.png').convert_alpha()
+
+
+def toggleFireplaceHeartbeat():
+    global currentFireplaceFrequecy
+    
+    # Toggle between 1kHz and 5kHz when fireplace relay should be closed (N.O.). This runs via schedual
+    if fireplaceRelayClosed:
+        if currentFireplaceFrequecy == 1000:
+            currentFireplaceFrequecy = 5000
+        else:
+            currentFireplaceFrequecy = 1000
+        
+        fireplaceOutput.ChangeFrequency(currentFireplaceFrequecy)
+    else:
+        fireplaceOutput.stop()
 
 def switch_desktop(target):
     """Update the active desktop to the target desktop."""
@@ -1162,6 +1186,8 @@ schedule.every(23).minutes.do(screenSaver)
 # schedule.every(3).seconds.do(screenSaver)
 schedule.every(93).minutes.do(weatherForecast.update)
 schedule.every(1).seconds.do(backlightController)
+
+schedule.every(1).seconds.do(toggleFireplaceHeartbeat)
 
 clock = pygame.time.Clock()
 
