@@ -48,8 +48,6 @@ posistioning method is somewhat straigtforeward.
 from fireplace.library.libraryFunctions import *
 from fireplace.utils.defines import *
 from fireplace.utils.keys import *
-# from fireplace.utils.keys import HOME_ASSISTANT_API_KEY
-# from fireplace.utils.keys import HOME_ASSISTANT_URL
 
 from homeassistant_api.models.domains import Domain
 
@@ -113,8 +111,14 @@ GPIO.setup(motionSensorPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 # Fireplace control pin - PWM provides "heartbeat" to relay controller
 fireplaceControlPin = 19
-currentFireplaceFrequecy = 1000
+lowFireplaceFrequecy = 75
+highFireplaceFrequecy = 250
+currentFireplaceFrequecy = lowFireplaceFrequecy
 fireplaceRelayClosed = True
+
+# import pigpio
+# pi = pigpio.pi()
+# pi.hardware_PWM(fireplaceControlPin, 250, 500000)  # 250Hz, 50% duty
 
 GPIO.setup(fireplaceControlPin, GPIO.OUT)
 fireplaceOutput = GPIO.PWM(fireplaceControlPin, currentFireplaceFrequecy)
@@ -219,14 +223,15 @@ fireOff = pygame.image.load(PROJECT_ROOT + '/Images/fireOff.png').convert_alpha(
 def toggleFireplaceHeartbeat():
     global currentFireplaceFrequecy
     
-    # Toggle between 1kHz and 5kHz when fireplace relay should be closed (N.O.). This runs via schedual
+    # Toggle between two frequencies when fireplace relay should be closed (N.O.). This runs via schedual
     if fireplaceRelayClosed:
-        if currentFireplaceFrequecy == 1000:
-            currentFireplaceFrequecy = 5000
+        if currentFireplaceFrequecy == lowFireplaceFrequecy:
+            currentFireplaceFrequecy = highFireplaceFrequecy
         else:
-            currentFireplaceFrequecy = 1000
-        
+            currentFireplaceFrequecy = lowFireplaceFrequecy
+
         fireplaceOutput.ChangeFrequency(currentFireplaceFrequecy)
+        
     else:
         fireplaceOutput.stop()
 
