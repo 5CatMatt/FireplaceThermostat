@@ -3,6 +3,7 @@
 
 '''
 The infamous, maybe in-famous, fireplace thermostat; first doc found = early 2018
+
 not a fireplace, nor a thermostat... yet
 
 requirements.this.project.was.done.without.requiremnts.IMPORTANT
@@ -13,12 +14,14 @@ requirements.this.project.was.done.without.requiremnts.IMPORTANT
             - Don't cause a hazard, and mean it
         - Gain weather data from and external API
             - Maybe use this to alter thermostat behavior
+            - Current solution is Open Weather Map
         - Learn and transmit IR signals for control of nearby devices
         - Sense user proximity for power consumption and interactive activites
         - Sense temperature, and why not humidity
     Fireplace:
         Well prety much anything can be one and some of the best laid plans became
-        one on accident. 
+        one on accident. Current solution is a gas fireplace which simply needs a
+        short between two conductors to activate.
 
 Hardware:
 Pi 3 B+
@@ -43,7 +46,13 @@ the static code is difficult to update. If more screens are to be added in the
 future a refactor is in order. Generating a save file and a dynamic element
 posistioning method is somewhat straigtforeward. 
 
+TODO Some functions have proper comment structure, many do not.
+TODO Investigate includes, some may be unused
+TODO The OOP pattern used to display pages may benefit from a refactor
+
 '''
+
+import pygame
 
 from fireplace.library.libraryFunctions import *
 from fireplace.utils.defines import *
@@ -56,9 +65,9 @@ import os.path
 
 import paho.mqtt.client as mqtt
 
-x = 0
-y = 0
-os.environ['SDL_VIDEO_WINDOW_POS'] = "%d, %d" % (x, y)
+displayStartPosistionX = 0
+displayStartPosistionY = 0
+os.environ['SDL_VIDEO_WINDOW_POS'] = "%d, %d" % (displayStartPosistionX, displayStartPosistionY)
 
 imgPath, imgDirs, imgFiles = next(os.walk(BACKGROUNDS_DIR))
 imgFileCnt = len(imgFiles)
@@ -72,8 +81,6 @@ import ast
 from itertools import count
 
 import json
-
-import pygame
 
 import requests
 import pandas as pd
@@ -107,15 +114,16 @@ GPIO.setmode(GPIO.BCM)
 
 # PIR sensor
 motionSensorPin = 18
-GPIO.setup(motionSensorPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(motionSensorPin, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 
-# Fireplace control pin - PWM provides "heartbeat" to relay controller
+# Fireplace control pin - PWM provides "heartbeat" to relay controller, lower frequecies are more stable
 fireplaceControlPin = 19
 lowFireplaceFrequecy = 75
 highFireplaceFrequecy = 250
 currentFireplaceFrequecy = lowFireplaceFrequecy
 fireplaceRelayClosed = True
 
+# This PWM method is much more accurate but requires an annoying sudo pigpiod command in the virtual environment
 # import pigpio
 # pi = pigpio.pi()
 # pi.hardware_PWM(fireplaceControlPin, 250, 500000)  # 250Hz, 50% duty
@@ -150,6 +158,7 @@ pygame.mouse.set_visible(False)
 
 screenSize = width, height = 800, 480
 
+# You can get trapped in full screen pygame, also useful items for testing and debugging go here
 if DEVELOPER_MODE:
     screen = pygame.display.set_mode(screenSize)
     motionCounterResetValue = 300000
@@ -200,6 +209,7 @@ colors = COLORS
 
 from homeassistant_api import Client
 
+# Connect to the home assistant API and get all of the office lights, we can iterate through each service in a domain
 client = Client(HOME_ASSISTANT_URL, HOME_ASSISTANT_API_KEY)
 service = client.get_domain("light")
 
@@ -219,11 +229,20 @@ layoutFile = PROJECT_ROOT + "/layoutHomeScreen.json"
 fireOn = pygame.image.load(PROJECT_ROOT + '/Images/fireOn.png').convert_alpha()
 fireOff = pygame.image.load(PROJECT_ROOT + '/Images/fireOff.png').convert_alpha()
 
-
 def toggleFireplaceHeartbeat():
+    '''
+    Toggle between two PWM output frequencies when fireplace relay (N.O.) should be closed at 50% duty cycle.
+    This runs via schedual currently set at 1 second.
+
+    Manipulates the global currentFireplaceFrequecy
+
+    >>> toggleFireplaceHeartbeat()
+    if higher frequecy is defined, switch to lower and vise versa
+    if the relay should be deactivated, stop PWM output
+    '''
     global currentFireplaceFrequecy
     
-    # Toggle between two frequencies when fireplace relay should be closed (N.O.). This runs via schedual
+    # 
     if fireplaceRelayClosed:
         if currentFireplaceFrequecy == lowFireplaceFrequecy:
             currentFireplaceFrequecy = highFireplaceFrequecy
@@ -231,15 +250,15 @@ def toggleFireplaceHeartbeat():
             currentFireplaceFrequecy = lowFireplaceFrequecy
 
         fireplaceOutput.ChangeFrequency(currentFireplaceFrequecy)
-        
+
     else:
         fireplaceOutput.stop()
 
-def switch_desktop(target):
+def switchDesktop(target):
     """Update the active desktop to the target desktop."""
     activeScreen.update(target)
 
-def handle_gesture():
+def handleGesture():
     '''
     APDS 9960 light sensor via i2c. Can be set to trigger on proximity, light,
     color, and gesture.
@@ -266,12 +285,22 @@ def handle_gesture():
 
     if gesture == 3:  # Left swipe
         currentDesktopIndex = (currentDesktopIndex + 1) % len(desktops)
-        switch_desktop(desktops[currentDesktopIndex])
+        switchDesktop(desktops[currentDesktopIndex])
     elif gesture == 4:  # Right swipe
         currentDesktopIndex = (currentDesktopIndex - 1) % len(desktops)
-        switch_desktop(desktops[currentDesktopIndex])
+        switchDesktop(desktops[currentDesktopIndex])
 
-def text_handler(text, font, color):
+def textHandler(text, font, color):
+    '''
+    Simple text display function which returns the size of the text object
+
+    >>> textSurf, textRect = textHandler("Text to display", fonts["fontCen18"], colors["palBlue"])
+    Display text and return text object size
+
+    :param string: Text displayed
+    :param font: Pygame font
+    :param tuple: RGB color
+    '''
     textSurface = font.render(text, True, color)
     return textSurface, textSurface.get_rect()
 
@@ -328,19 +357,19 @@ def button(butText: str, butFont: pygame.font.Font, butTextColor: tuple, butColo
         # settings page buttons
         if click[0] == 1 and action == "setDesktop":
             print(settingsBG.selectedThumb)
-            switch_desktop(settingsBG.selectedThumb)
+            switchDesktop(settingsBG.selectedThumb)
 
         if click[0] == 1 and action == "backHome":
-            switch_desktop(activeScreen.lastDesktop)
+            switchDesktop(activeScreen.lastDesktop)
             waitForLiftup()
 
         # Used for page reload when working on layout json
         if click[0] == 1 and action == "reload":
             reloadLayoutData()
-            switch_desktop(desktops[currentDesktopIndex])
+            switchDesktop(desktops[currentDesktopIndex])
               
     pygame.draw.rect(screen, butColor, (butX, butY, butW, butH), 0)
-    textSurf, textRect = text_handler(butText, butFont, butTextColor)
+    textSurf, textRect = textHandler(butText, butFont, butTextColor)
     textRect.center = ((butX + (butW / 2)), (butY + (butH / 2)) )
     screen.blit(textSurf, textRect)
 
@@ -419,7 +448,7 @@ def desktopPick(butText, butFont, butTextColor, butColor, butX, butY, butW, butH
         pygame.draw.rect(screen, butColor, (butX, butY, butW, butH), 0)
 
     pygame.draw.rect(screen, butColor, (butX, butY, butW, butH), 0)
-    textSurf, textRect = text_handler(butText, butFont, butTextColor)
+    textSurf, textRect = textHandler(butText, butFont, butTextColor)
     textRect.center = ( (butX + (butW / 2)), (butY + (butH / 2)) )
     screen.blit(textSurf, textRect)
 
@@ -1024,7 +1053,6 @@ class screenHome():
             # update the x position for the next button
             x_position += xOffset
 
-# Tab handler class
 class tabHandler:
     def __init__(self):
         # Initialize attributes to None
@@ -1075,8 +1103,8 @@ def reloadLayoutData():
     # Update the desktops list
     desktops = list(desktopInstances.values())
 
-# Load layout data from JSON file
 def loadLayoutData(json_file_path):
+    # Load layout data from JSON file
     try:
         with open(layoutFile) as json_file:  
             homeLayoutData = json.load(json_file)
@@ -1097,7 +1125,7 @@ def screenSaver():
         with backlight.fade(duration = .5):
             backlight.brightness = 0
 
-        switch_desktop(desktops[currentDesktopIndex])
+        switchDesktop(desktops[currentDesktopIndex])
 
         activeScreen.desktop.update()
         pygame.display.update()
@@ -1121,8 +1149,9 @@ def publishMQTT(client, topic, payload):
     except Exception as e:
         print(f"Failed to publish message: {e}")
 
-# Callback when the client receives a CONNACK response from the server.
 def onConnectMQTT(client, userdata, flags, rc):
+    # Callback when the client receives a CONNACK response from the server.
+
     print(f"Connected with result code {rc}")
     # Subscribe to the topic
     client.subscribe(motionTopic)
@@ -1130,8 +1159,9 @@ def onConnectMQTT(client, userdata, flags, rc):
     client.subscribe(humidityTopic)
     client.subscribe(batteryTopic)
 
-# Callback when a PUBLISH message is received from the server.
 def onMessageMQTT(client, userdata, msg):
+    # Callback when a PUBLISH message is received from the server.
+
     print(f"Received message: {msg.payload.decode()} on topic {msg.topic}")
     if msg.topic == temperatureTopic:
         officeTemperature = msg.payload.decode() + "°F"
@@ -1168,15 +1198,17 @@ desktopInstances = createDesktops(homeLayoutData)
 desktops = list(desktopInstances.values())
 currentDesktopIndex = 0
 
-# enter main loop
+# Keeps main loop running
 done = False
 
+# Create objects
 todayNow = dateTimeNow()
 downstairs = currentTemp()
 currentWeather = getCurrentWeather()
 weatherForecast = getWeatherForecast()
 weatherBG = screenWeather()
 activeScreen = tabHandler()
+# Must set a desktop here, settings below needs the active screen set to generate thumbnails
 activeScreen.setInitialDesktop(desktops[currentDesktopIndex])
 settingsBG = screenSettings()
 
@@ -1206,7 +1238,7 @@ if __name__ == "__main__":
         pygame.display.update()
 
         # Check for gestures
-        handle_gesture()
+        handleGesture()
 
         data = {
             "time": str(todayNow.timeNow),
