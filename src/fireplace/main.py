@@ -196,15 +196,6 @@ data = {
     "humidity": None
 }
 
-entities = [
-    'light.matts_desk',
-    'light.melissas_desk',
-    'light.synth_corner',
-    'light.tv',
-    'light.bed',
-    'light.bed_head'
-]
-
 colors = COLORS
 
 from homeassistant_api import Client
@@ -257,6 +248,20 @@ def toggleFireplaceHeartbeat():
 def switchDesktop(target):
     """Update the active desktop to the target desktop."""
     activeScreen.update(target)
+
+def read_gesture_safely(retries=3):
+    '''
+    Pulled from chat, this might be helpful if the lockups continue, they are happening in C not Python
+
+    Added 4.7k resistors to the SDA and SCL lines which also long dupont jumpers, hardware might be the fault
+    '''
+    for _ in range(retries):
+        try:
+            return apds.gesture()
+        except OSError as e:
+            print("Gesture I2C error:", e)
+            time.sleep(0.1)
+    return 0
 
 def handleGesture():
     '''
