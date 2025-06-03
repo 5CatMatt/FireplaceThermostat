@@ -860,8 +860,6 @@ class screenHome():
 
     def PositionElement(self, elementName: str):
         '''
-         
-
         >>> day_of_week(0)
         Monday
         >>> day_of_week(6)

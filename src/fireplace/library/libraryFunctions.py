@@ -3,34 +3,41 @@ from fireplace.utils.defines import *
 import math
 
 def to12hour(time):
-    # Returns a clean hour and leading zero min string without am or pm
-    hour = time.hour
-    minute = time.minute
+    '''
+    Returns time in 12-hour format without am/pm 
 
-    timeNow = ''
+    >>> to12hour(14:05)
+    '2:05'
 
-    # Correct for midnight and 24 hr time
-    if hour == 0:
-        hour = 12
-    elif hour > 12:
-        hour -= 12
-
-    timeNow += str(hour) + ":"
-
-    # Add leading zero to mins
-    if minute < 10:
-        timeNow += "0"
-
-    timeNow += str(minute)
-
-    return timeNow
+    :param string: timeNow
+    :return string: formatted current time, 12-hour format without am/pm
+    '''
+    hour = time.hour % 12 or 12
+    return f"{hour}:{time.minute:02}"
 
 def truncate(number, digits):
-    # Multiply the number by the stepper to shift the digits, truncate to remove extra decimals,
-    # then divide by the stepper to shift the digits back to their original position
+    '''
+    Returns the number passed in truncated to the provided number of digits.
+
+    >>> truncate(4.123, 1)
+    '4.1'
+
+    :param float: Input number, typically temperature
+    :param int: Number of digits to truncate input number to
+    :return float: Truncated input number
+    '''
     stepper = pow(10.0, digits)
     return math.trunc(stepper * number) / stepper
 
 def CtoF(tempInC):
+    '''
+    Converts celcius to farenheight temperature
+
+    >>> to12hour(35)
+    '95'
+
+    :param float: Celcius temperature
+    :return float: Farenheight temperature
+    '''
     tempInF = 9.0/5.0 * tempInC + 32
     return tempInF
