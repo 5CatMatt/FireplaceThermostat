@@ -1,8 +1,8 @@
 # src/fireplace/utils/defines.py
 import os
 
-DEVELOPER_MODE = True
-# DEVELOPER_MODE = False
+# DEVELOPER_MODE = True
+DEVELOPER_MODE = False
 
 # Get the absolute path to the project root directory
 PROJECT_ROOT = os.path.dirname(os.path.dirname((os.path.abspath(__file__))))

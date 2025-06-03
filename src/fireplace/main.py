@@ -123,11 +123,6 @@ highFireplaceFrequecy = 250
 currentFireplaceFrequecy = lowFireplaceFrequecy
 fireplaceRelayClosed = True
 
-# This PWM method is much more accurate but requires an annoying sudo pigpiod command in the virtual environment
-# import pigpio
-# pi = pigpio.pi()
-# pi.hardware_PWM(fireplaceControlPin, 250, 500000)  # 250Hz, 50% duty
-
 GPIO.setup(fireplaceControlPin, GPIO.OUT)
 fireplaceOutput = GPIO.PWM(fireplaceControlPin, currentFireplaceFrequecy)
 fireplaceOutput.start(50)
@@ -248,20 +243,6 @@ def toggleFireplaceHeartbeat():
 def switchDesktop(target):
     """Update the active desktop to the target desktop."""
     activeScreen.update(target)
-
-def read_gesture_safely(retries=3):
-    '''
-    Pulled from chat, this might be helpful if the lockups continue, they are happening in C not Python
-
-    Added 4.7k resistors to the SDA and SCL lines which also long dupont jumpers, hardware might be the fault
-    '''
-    for _ in range(retries):
-        try:
-            return apds.gesture()
-        except OSError as e:
-            print("Gesture I2C error:", e)
-            time.sleep(0.1)
-    return 0
 
 def handleGesture():
     '''
