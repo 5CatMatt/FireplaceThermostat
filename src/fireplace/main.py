@@ -26,10 +26,6 @@ requirements.this.project.was.done.without.requiremnts.IMPORTANT
 Hardware:
 Pi 3 B+
 7" Pi LCD with touch
-SHT41 temperature and humidity sensor
-PIR motion sensor for occupancy
-9960 light sensor for gesture and light
-IR sense and transmit 
 
 The display backlight controls have gone through many changes over the years
 it is simple to dim the display, for now, but the touch events remain active.
@@ -91,30 +87,30 @@ import time
 from datetime import datetime
 import schedule
 
-# temp and hum sensor - SHT41 - i2c
-import adafruit_sht4x
-import board
-i2c = board.I2C()
-sht = adafruit_sht4x.SHT4x(i2c)
-sht.mode = adafruit_sht4x.Mode.NOHEAT_HIGHPRECISION
+# # temp and hum sensor - SHT41 - i2c
+# import adafruit_sht4x
+# import board
+# i2c = board.I2C()
+# sht = adafruit_sht4x.SHT4x(i2c)
+# sht.mode = adafruit_sht4x.Mode.NOHEAT_HIGHPRECISION
 
-# Initialize gesture detection - APDS9960 sensor - i2c 
-from adafruit_apds9960.apds9960 import APDS9960
-import digitalio
+# # Initialize gesture detection - APDS9960 sensor - i2c 
+# from adafruit_apds9960.apds9960 import APDS9960
+# import digitalio
 
-int_pin = digitalio.DigitalInOut(board.D5)
-int_pin.switch_to_input(pull=digitalio.Pull.UP)
-apds = APDS9960(i2c)
+# int_pin = digitalio.DigitalInOut(board.D5)
+# int_pin.switch_to_input(pull=digitalio.Pull.UP)
+# apds = APDS9960(i2c)
 
-apds.enable_proximity = True
-apds.enable_gesture = True
+# apds.enable_proximity = True
+# apds.enable_gesture = True
+
+# # PIR sensor
+# motionSensorPin = 18
+# GPIO.setup(motionSensorPin, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 
 # Broadcom naming convention for GIPO pins
 GPIO.setmode(GPIO.BCM)
-
-# PIR sensor
-motionSensorPin = 18
-GPIO.setup(motionSensorPin, GPIO.IN, pull_up_down = GPIO.PUD_DOWN)
 
 # Fireplace control pin - PWM provides "heartbeat" to relay controller, lower frequecies are more stable
 fireplaceControlPin = 19
